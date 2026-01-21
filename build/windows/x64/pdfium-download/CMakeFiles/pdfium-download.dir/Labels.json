@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/pdfium-download/CMakeFiles/pdfium-download"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/pdfium-download/CMakeFiles/6750858d70fcdbc1f6565c817373568d/pdfium-download.rule"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/pdfium-download/CMakeFiles/310371f44501b1b2ee245439a75a70a8/pdfium-download-complete.rule"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/pdfium-download/CMakeFiles/1deef00de05397443e48c1b2852f6221/pdfium-download-build.rule"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/pdfium-download/CMakeFiles/1deef00de05397443e48c1b2852f6221/pdfium-download-configure.rule"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/pdfium-download/CMakeFiles/1deef00de05397443e48c1b2852f6221/pdfium-download-download.rule"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/pdfium-download/CMakeFiles/1deef00de05397443e48c1b2852f6221/pdfium-download-install.rule"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/pdfium-download/CMakeFiles/1deef00de05397443e48c1b2852f6221/pdfium-download-mkdir.rule"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/pdfium-download/CMakeFiles/1deef00de05397443e48c1b2852f6221/pdfium-download-patch.rule"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/pdfium-download/CMakeFiles/1deef00de05397443e48c1b2852f6221/pdfium-download-test.rule"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/pdfium-download/CMakeFiles/1deef00de05397443e48c1b2852f6221/pdfium-download-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"pdfium-download"
+		],
+		"name" : "pdfium-download"
+	}
+}

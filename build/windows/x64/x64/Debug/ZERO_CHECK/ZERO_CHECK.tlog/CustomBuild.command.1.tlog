@@ -1,0 +1,10 @@
+^C:\USERS\JOSHUAOSBURN\STUDIOPROJECTS\WORKAPP\BUILD\WINDOWS\X64\CMAKEFILES\0FEA549A99EC78C11696F3B926985383\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\Microsoft Visual Studio\18\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/JoshuaOsburn/StudioProjects/workapp/windows -BC:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/workapp.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

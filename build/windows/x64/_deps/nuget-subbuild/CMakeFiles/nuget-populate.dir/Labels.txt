@@ -1,0 +1,15 @@
+# Target labels
+ nuget-populate
+# Source files and their labels
+C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/nuget-populate
+C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/b399be9c515844f3341957b3cacac786/nuget-populate.rule
+C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/b7ca22a6e94c0cf4297e450ea907ea30/nuget-populate-complete.rule
+C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/1193762b3fe99dd67e0e6d064a521a1f/nuget-populate-build.rule
+C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/1193762b3fe99dd67e0e6d064a521a1f/nuget-populate-configure.rule
+C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/1193762b3fe99dd67e0e6d064a521a1f/nuget-populate-copyfile.rule
+C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/1193762b3fe99dd67e0e6d064a521a1f/nuget-populate-download.rule
+C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/1193762b3fe99dd67e0e6d064a521a1f/nuget-populate-install.rule
+C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/1193762b3fe99dd67e0e6d064a521a1f/nuget-populate-mkdir.rule
+C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/1193762b3fe99dd67e0e6d064a521a1f/nuget-populate-patch.rule
+C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/1193762b3fe99dd67e0e6d064a521a1f/nuget-populate-test.rule
+C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/1193762b3fe99dd67e0e6d064a521a1f/nuget-populate-update.rule

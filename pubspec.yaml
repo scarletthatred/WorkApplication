@@ -1,0 +1,66 @@
+name: workapp
+description: "A new Flutter project."
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+
+  cupertino_icons: ^1.0.2
+  shared_preferences: ^2.5.3
+  encrypt: ^5.0.3
+  get: ^4.7.3
+  url_launcher: ^6.3.2
+  flutter_map: ^8.2.2
+  latlong2: ^0.9.1
+  geolocator: ^14.0.2
+  open_file: ^3.5.10
+  pdf: ^3.11.3
+  printing: ^5.14.2
+  numberpicker: ^2.1.2
+  csv: ^6.0.0
+  excel: ^4.0.6
+  flutter_colorpicker: ^1.1.0
+  speed_test_dart: ^1.0.5+0
+  webview_windows: ^0.4.0
+  window_manager: ^0.5.1
+  provider: ^6.1.5+1
+  path_provider: any
+  intl: any
+  bitsdojo_window: ^0.1.6
+  audioplayers: ^6.5.1
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+  flutter_lints: ^5.0.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "lib/images/turnkeyLogo.png"
+
+flutter:
+
+
+  uses-material-design: true
+
+  assets:
+    - assets/pins/locationsdata.json
+    - lib/assets/pins/settings.json
+    - lib/examples/assets/company_logo.png
+    - lib/images/turnkeyLogo.png
+    - assets/fonts/Roboto-Regular.ttf
+    - assets/fonts/Roboto-Bold.ttf
+    - assets/fonts/Roboto-Italic.ttf
+    - assets/fonts/Roboto-BoldItalic.ttf
+    - assets/fonts/Roboto-Black.ttf
+    - lib/pacman/images/
+dependency_overrides:
+  geolocator_android: ^4.5.6

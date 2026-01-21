@@ -1,0 +1,49 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/nuget-populate"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/b399be9c515844f3341957b3cacac786/nuget-populate.rule"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/b7ca22a6e94c0cf4297e450ea907ea30/nuget-populate-complete.rule"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/1193762b3fe99dd67e0e6d064a521a1f/nuget-populate-build.rule"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/1193762b3fe99dd67e0e6d064a521a1f/nuget-populate-configure.rule"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/1193762b3fe99dd67e0e6d064a521a1f/nuget-populate-copyfile.rule"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/1193762b3fe99dd67e0e6d064a521a1f/nuget-populate-download.rule"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/1193762b3fe99dd67e0e6d064a521a1f/nuget-populate-install.rule"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/1193762b3fe99dd67e0e6d064a521a1f/nuget-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/1193762b3fe99dd67e0e6d064a521a1f/nuget-populate-patch.rule"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/1193762b3fe99dd67e0e6d064a521a1f/nuget-populate-test.rule"
+		},
+		{
+			"file" : "C:/Users/JoshuaOsburn/StudioProjects/workapp/build/windows/x64/_deps/nuget-subbuild/CMakeFiles/1193762b3fe99dd67e0e6d064a521a1f/nuget-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"nuget-populate"
+		],
+		"name" : "nuget-populate"
+	}
+}
