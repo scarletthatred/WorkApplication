@@ -39,7 +39,7 @@ class _PHomePageState extends State<PHomePage> {
   int player = 656;
   // int ghost = 407;
   int ghost1 = 29;
-  int ghost1HomeLocation = 838;
+  int ghost1HomeLocation = 813;
   int ghost2 = 406;
   int ghost3 = 405;
   bool preGame = true;
@@ -260,34 +260,84 @@ class _PHomePageState extends State<PHomePage> {
     }
 
     }
+    int movement(int character,String direction){
+    int changedCharacter = 0;
+    switch(direction){
+      case "right":
+        changedCharacter = character +1;
+        return changedCharacter;
+      case "left":
+        changedCharacter = character -1;
+        return changedCharacter;
+      case "up":
+        changedCharacter = character - numberInPlayerRow;
+        return changedCharacter;
+      case"down":
+        changedCharacter = character + numberInPlayerRow;
+        return changedCharacter;
+        default:
+          return character;
+    }
+    }
 
     void ghost1AI(){
-    if(ghost1HomeLocation > ghost1){
-      if(!barriers.contains(ghost1 + numberOfPlayerSquares)&& ghostLast != "stuck"){
+    //top left corner
+    if(ghost1HomeLocation > .25*numberOfPlayerSquares){
+
+    }
+
+
+    //top right corner
+
+      //bottom left corner
+
+      //bottom right corner
+
+
+
+
+
+
+
+
+    //goes to bottom right corner
+    if(ghost1HomeLocation > ghost1 && ghost1HomeLocation - ghost1 > numberInPlayerRow+1){
+      print(ghost1);
+      print(ghostLast);
+      if(!barriers.contains(ghost1 + numberInPlayerRow)&& ghostLast != "stuck"){
         setState(() {
-          ghost1 += numberOfPlayerSquares;
+          ghost1 = movement(ghost1,"down");
           ghostLast = "down";
         });
       }
       else if(!barriers.contains(ghost1 + 1)&& ghostLast != "stuck"){
         setState(() {
-          ghost1 ++;
+          ghost1 = movement(ghost1,"right");
           ghostLast = "right";
         });
       }
-      else if(barriers.contains(ghost1 + 1)&& barriers.contains(ghost1 + numberOfPlayerSquares)){
+      else if(barriers.contains(ghost1 + 1)&& barriers.contains(ghost1 + numberInPlayerRow)&&ghostLast != "stuck"){
         ghostLast="stuck";
       }
-      else if(!barriers.contains(ghost1 -1)&&ghostLast == "stuck" && barriers.contains(ghost1 + numberOfPlayerSquares)){
-        ghost1 --;
+      else if(!barriers.contains(ghost1 -1) && ghostLast == "stuck" && barriers.contains(ghost1 + numberInPlayerRow)){
+        setState(() {
+          ghost1 = movement(ghost1,"left");
+        });
       }
-      else if(!barriers.contains(ghost1 + numberOfPlayerSquares)){
-        ghostLast = "down";
-        ghost1 += numberOfPlayerSquares;
+      else if(!barriers.contains(ghost1 + numberInPlayerRow)){
+        setState(() {
+          ghostLast = "down";
+          ghost1 = movement(ghost1, "down");
+        });
       }
       else if(ghost1 == ghost1HomeLocation){
+        print("at Home");
         ghostState = GhostState.home;
       }
+    }
+    //goes to the bottom right corner
+    else if(ghost1HomeLocation < ghost1){
+
     }
 
     }
@@ -666,7 +716,7 @@ class _PHomePageState extends State<PHomePage> {
         throw UnimplementedError();
     }
 
-    oldMoveGhost();
+    ghost1AI();
   }
 
   void moveGhost2() {
