@@ -52,8 +52,6 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/pins/locationsdata.json
-    - lib/assets/pins/settings.json
     - lib/examples/assets/company_logo.png
     - lib/images/turnkeyLogo.png
     - assets/fonts/Roboto-Regular.ttf
