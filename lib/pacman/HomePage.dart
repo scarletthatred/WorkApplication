@@ -17,7 +17,7 @@ class PHomePage extends StatefulWidget {
   _PHomePageState createState() => _PHomePageState();
 }
 
-enum GhostState { inCage, leaving, active , chasing, scatter, frightened,home}
+enum GhostState { inCage, leaving, active , scatter, frightened,home}
 
 
 
@@ -31,20 +31,31 @@ class _PHomePageState extends State<PHomePage> {
   int ghost1LeavingSteps = 3;
   int ghost2LeavingSteps = 3;
   int ghost3LeavingSteps = 3;
+  int ghost4LeavingSteps = 3;
   Timer? cageTimer1;
   Timer? cageTimer2;
   Timer? cageTimer3;
   Timer? cageTimer4;
+  Timer? niceTimer1;
+  Timer? niceTimer2;
+  Timer? niceTimer3;
+  Timer? niceTimer4;
   static int numberInRow = 28;
   int playerLives = 3;
   int numberOfSquares = (numberInRow * 31);
   int player = 656;
-  int homeLocation = 405;
+  int cageLocation = 405;
   int playerStartLocation = 656;
   int ghost1 = 407;
-  int ghost1HomeLocation = 813;
   int ghost2 = 406;
   int ghost3 = 405;
+  int ghost4 = 406;
+  int ghost1HomeLocation = 54;
+  int ghost2HomeLocation =29;
+  int ghost3HomeLocation =838;
+  int ghost4HomeLocation =813;
+
+
   bool preGame = true;
   bool mouthClosed = false;
   var controller;
@@ -58,6 +69,7 @@ class _PHomePageState extends State<PHomePage> {
   String ghostLast = "left";
   String ghostLast2 = "left";
   String ghostLast3 = "down";
+  String ghostLast4 = "up";
 
 
   int wrapIndex(int index) {
@@ -146,6 +158,10 @@ class _PHomePageState extends State<PHomePage> {
     });
   }
 
+  void startNiceGhostTimer(){
+
+  }
+
   void start2GhostCageTimer() {
     cageTimer2?.cancel();
     cageTimer2 = Timer(const Duration(seconds: 25), () {
@@ -171,7 +187,7 @@ class _PHomePageState extends State<PHomePage> {
     cageTimer4 = Timer(const Duration(seconds: 60), () {
       setState(() {
         ghostState4 = GhostState.leaving;
-        // ghostLast2 = canMoveLeft(ghost4) ? "left" : "right";
+        // ghostLast4 = canMoveLeft(ghost4) ? "left" : "right";
         // ghost4LeavingSteps = 3;
       });
     });
@@ -180,8 +196,8 @@ class _PHomePageState extends State<PHomePage> {
     _focusNode.requestFocus();
     resumeGame();
     start1GhostCageTimer();
-    // start2GhostCageTimer();
-    // start3GhostCageTimer();
+    start2GhostCageTimer();
+    start3GhostCageTimer();
     // start4GhostCageTimer();
     if (preGame) {
       preGame = false;
@@ -230,17 +246,7 @@ class _PHomePageState extends State<PHomePage> {
                     TextButton(
                       onPressed: () {
                         setState(() {
-                          player = playerStartLocation;
-                          ghost1 = homeLocation;
-                          ghost2 = homeLocation;
-                          ghost3 = homeLocation;
-                          preGame = false;
-                          mouthClosed = false;
-                          direction = "right";
-                          food.clear();
-                          pebbles.clear();
-                          getFood();
-                          score = 0;
+                          hardRestart();
                           Navigator.pop(context);
                         });
                       },
@@ -275,20 +281,52 @@ class _PHomePageState extends State<PHomePage> {
 
   softRestart(){
     player = playerStartLocation;
-    ghost1 = homeLocation;
-    ghost2 = homeLocation;
-    ghost3 = homeLocation;
+    ghost1 = cageLocation;
+    ghost2 = cageLocation;
+    ghost3 = cageLocation;
     ghostState = GhostState.inCage;
     ghostState2 = GhostState.inCage;
     ghostState3 = GhostState.inCage;
     ghost1LeavingSteps=3;
     ghost2LeavingSteps = 3;
     ghost3LeavingSteps=3;
+    pauseGame();
+    resumeGame();
+    start1GhostCageTimer();
+    start2GhostCageTimer();
+    start3GhostCageTimer();
     mouthClosed = false;
     direction = "right";
 
   }
 
+
+  hardRestart(){
+    player = playerStartLocation;
+    ghost1 = cageLocation;
+    ghost2 = cageLocation;
+    ghost3 = cageLocation;
+    ghostState = GhostState.inCage;
+    ghostState2 = GhostState.inCage;
+    ghostState3 = GhostState.inCage;
+    ghost1LeavingSteps=3;
+    ghost2LeavingSteps = 3;
+    ghost3LeavingSteps=3;
+    score = 0;
+    playerLives = 3;
+    preGame = true;
+    food.clear();
+    pebbles.clear();
+    getFood();
+    pauseGame();
+    resumeGame();
+    start1GhostCageTimer();
+    start2GhostCageTimer();
+    start3GhostCageTimer();
+    mouthClosed = false;
+    direction = "right";
+
+  }
 
   void getFood() {
     food.clear();
@@ -381,7 +419,7 @@ class _PHomePageState extends State<PHomePage> {
 
 
 
-  void ghost1AI() {
+  void ghost1AI(int target) {
     List<String> possibleDirs = [];
 
     if (canMoveLeft(ghost1)) possibleDirs.add("left");
@@ -394,7 +432,7 @@ class _PHomePageState extends State<PHomePage> {
       if (possibleDirs.isEmpty) {
         possibleDirs.add(opposite(ghostLast));
       }
-      ghostLast = chooseDirection(ghost1, player, possibleDirs);
+      ghostLast = chooseDirection(ghost1, target, possibleDirs);
     }
 
     int nextPos = movement(ghost1, ghostLast);
@@ -410,7 +448,7 @@ class _PHomePageState extends State<PHomePage> {
       possibleDirs.remove(opposite(ghostLast));
 
       if (possibleDirs.isNotEmpty) {
-        ghostLast = chooseDirection(ghost1, player, possibleDirs);
+        ghostLast = chooseDirection(ghost1, target, possibleDirs);
         nextPos = wrapIndex(movement(ghost1, ghostLast));
       }
     }
@@ -419,214 +457,327 @@ class _PHomePageState extends State<PHomePage> {
       ghost1 = nextPos;
     });
   }
+  void ghost2AI(int target) {
+    List<String> possibleDirs = [];
 
+    if (canMoveLeft(ghost2)) possibleDirs.add("left");
+    if (canMoveRight(ghost2)) possibleDirs.add("right");
+    if (canMoveUp(ghost2)) possibleDirs.add("up");
+    if (canMoveDown(ghost2)) possibleDirs.add("down");
 
-
-  void oldMoveGhost2() {
-    switch (ghostLast2) {
-      case "left":
-        if (!barriers.contains(ghost2 - 1)) {
-          setState(() {
-            ghost2--;
-          });
-        } else {
-          if (!barriers.contains(ghost2 + numberInRow)) {
-            setState(() {
-              ghost2 += numberInRow;
-              ghostLast2 = "down";
-            });
-          } else if (!barriers.contains(ghost2 + 1)) {
-            setState(() {
-              ghost2++;
-              ghostLast2 = "right";
-            });
-          } else if (!barriers.contains(ghost2 - numberInRow)) {
-            setState(() {
-              ghost2 -= numberInRow;
-              ghostLast2 = "up";
-            });
-          }
-        }
-        break;
-      case "right":
-        if (!barriers.contains(ghost2 + 1)) {
-          setState(() {
-            ghost2++;
-          });
-        } else {
-          if (!barriers.contains(ghost2 - numberInRow)) {
-            setState(() {
-              ghost2 -= numberInRow;
-              ghostLast2 = "up";
-            });
-          } else if (!barriers.contains(ghost2 + numberInRow)) {
-            setState(() {
-              ghost2 += numberInRow;
-              ghostLast2 = "down";
-            });
-          } else if (!barriers.contains(ghost2 - 1)) {
-            setState(() {
-              ghost2--;
-              ghostLast2 = "left";
-            });
-          }
-        }
-        break;
-      case "up":
-        if (!barriers.contains(ghost2 - numberInRow)) {
-          setState(() {
-            ghost2 -= numberInRow;
-            ghostLast2 = "up";
-          });
-        } else {
-          if (!barriers.contains(ghost2 + 1)) {
-            setState(() {
-              ghost2++;
-              ghostLast2 = "right";
-            });
-          } else if (!barriers.contains(ghost2 - 1)) {
-            setState(() {
-              ghost2--;
-              ghostLast2 = "left";
-            });
-          } else if (!barriers.contains(ghost2 + numberInRow)) {
-            setState(() {
-              ghost2 += numberInRow;
-              ghostLast2 = "down";
-            });
-          }
-        }
-        break;
-      case "down":
-        if (!barriers.contains(ghost2 + numberInRow)) {
-          setState(() {
-            ghost2 += numberInRow;
-            ghostLast2 = "down";
-          });
-        } else {
-          if (!barriers.contains(ghost2 - 1)) {
-            setState(() {
-              ghost2--;
-              ghostLast2 = "left";
-            });
-          } else if (!barriers.contains(ghost2 + 1)) {
-            setState(() {
-              ghost2++;
-              ghostLast2 = "right";
-            });
-          } else if (!barriers.contains(ghost2 - numberInRow)) {
-            setState(() {
-              ghost2 -= numberInRow;
-              ghostLast2 = "up";
-            });
-          }
-        }
-        break;
+    if (possibleDirs.length > 2) {
+      possibleDirs.remove(opposite(ghostLast2));
+      if (possibleDirs.isEmpty) {
+        possibleDirs.add(opposite(ghostLast2));
+      }
+      ghostLast2 = chooseDirection(ghost2, target, possibleDirs);
     }
+
+    int nextPos = movement(ghost2, ghostLast2);
+    nextPos = wrapIndex(nextPos);
+
+    if (barriers.contains(nextPos)) {
+      possibleDirs.clear();
+      if (canMoveLeft(ghost2)) possibleDirs.add("left");
+      if (canMoveRight(ghost2)) possibleDirs.add("right");
+      if (canMoveUp(ghost2)) possibleDirs.add("up");
+      if (canMoveDown(ghost2)) possibleDirs.add("down");
+
+      possibleDirs.remove(opposite(ghostLast2));
+
+      if (possibleDirs.isNotEmpty) {
+        ghostLast2 = chooseDirection(ghost2, target, possibleDirs);
+        nextPos = wrapIndex(movement(ghost2, ghostLast2));
+      }
+    }
+
+    setState(() {
+      ghost2 = nextPos;
+    });
+  }
+  void ghost3AI(int target) {
+    List<String> possibleDirs = [];
+
+    if (canMoveLeft(ghost3)) possibleDirs.add("left");
+    if (canMoveRight(ghost3)) possibleDirs.add("right");
+    if (canMoveUp(ghost3)) possibleDirs.add("up");
+    if (canMoveDown(ghost3)) possibleDirs.add("down");
+
+    if (possibleDirs.length > 2) {
+      possibleDirs.remove(opposite(ghostLast3));
+      if (possibleDirs.isEmpty) {
+        possibleDirs.add(opposite(ghostLast3));
+      }
+      ghostLast3 = chooseDirection(ghost3, target, possibleDirs);
+    }
+
+    int nextPos = movement(ghost3, ghostLast3);
+    nextPos = wrapIndex(nextPos);
+
+    if (barriers.contains(nextPos)) {
+      possibleDirs.clear();
+      if (canMoveLeft(ghost3)) possibleDirs.add("left");
+      if (canMoveRight(ghost3)) possibleDirs.add("right");
+      if (canMoveUp(ghost3)) possibleDirs.add("up");
+      if (canMoveDown(ghost3)) possibleDirs.add("down");
+
+      possibleDirs.remove(opposite(ghostLast3));
+
+      if (possibleDirs.isNotEmpty) {
+        ghostLast3 = chooseDirection(ghost3, target, possibleDirs);
+        nextPos = wrapIndex(movement(ghost3, ghostLast3));
+      }
+    }
+
+    setState(() {
+      ghost3 = nextPos;
+    });
+  }
+  void ghost4AI(int target) {
+    List<String> possibleDirs = [];
+
+    if (canMoveLeft(ghost4)) possibleDirs.add("left");
+    if (canMoveRight(ghost4)) possibleDirs.add("right");
+    if (canMoveUp(ghost4)) possibleDirs.add("up");
+    if (canMoveDown(ghost4)) possibleDirs.add("down");
+
+    if (possibleDirs.length > 2) {
+      possibleDirs.remove(opposite(ghostLast4));
+      if (possibleDirs.isEmpty) {
+        possibleDirs.add(opposite(ghostLast4));
+      }
+      ghostLast4 = chooseDirection(ghost4, target, possibleDirs);
+    }
+
+    int nextPos = movement(ghost4, ghostLast4);
+    nextPos = wrapIndex(nextPos);
+
+    if (barriers.contains(nextPos)) {
+      possibleDirs.clear();
+      if (canMoveLeft(ghost4)) possibleDirs.add("left");
+      if (canMoveRight(ghost4)) possibleDirs.add("right");
+      if (canMoveUp(ghost4)) possibleDirs.add("up");
+      if (canMoveDown(ghost4)) possibleDirs.add("down");
+
+      possibleDirs.remove(opposite(ghostLast4));
+
+      if (possibleDirs.isNotEmpty) {
+        ghostLast4 = chooseDirection(ghost4, target, possibleDirs);
+        nextPos = wrapIndex(movement(ghost4, ghostLast4));
+      }
+    }
+
+    setState(() {
+      ghost4 = nextPos;
+    });
   }
 
-  void oldMoveGhost3() {
-    switch (ghostLast) {
-      case "left":
-        if (!barriers.contains(ghost3 - 1)) {
-          setState(() {
-            ghost3--;
-          });
-        } else {
-          if (!barriers.contains(ghost3 + numberInRow)) {
-            setState(() {
-              ghost3 += numberInRow;
-              ghostLast3 = "down";
-            });
-          } else if (!barriers.contains(ghost3 + 1)) {
-            setState(() {
-              ghost3++;
-              ghostLast3 = "right";
-            });
-          } else if (!barriers.contains(ghost3 - numberInRow)) {
-            setState(() {
-              ghost3 -= numberInRow;
-              ghostLast3 = "up";
-            });
-          }
-        }
-        break;
-      case "right":
-        if (!barriers.contains(ghost3 + 1)) {
-          setState(() {
-            ghost3++;
-          });
-        } else {
-          if (!barriers.contains(ghost3 - numberInRow)) {
-            setState(() {
-              ghost3 -= numberInRow;
-              ghostLast3 = "up";
-            });
-          } else if (!barriers.contains(ghost3 - 1)) {
-            setState(() {
-              ghost3--;
-              ghostLast3 = "left";
-            });
-          } else if (!barriers.contains(ghost3 + numberInRow)) {
-            setState(() {
-              ghost3 += numberInRow;
-              ghostLast3 = "down";
-            });
-          }
-        }
-        break;
-      case "up":
-        if (!barriers.contains(ghost3 - numberInRow)) {
-          setState(() {
-            ghost3 -= numberInRow;
-            ghostLast3 = "up";
-          });
-        } else {
-          if (!barriers.contains(ghost3 + 1)) {
-            setState(() {
-              ghost3++;
-              ghostLast3 = "right";
-            });
-          } else if (!barriers.contains(ghost3 - 1)) {
-            setState(() {
-              ghost3--;
-              ghostLast3 = "left";
-            });
-          } else if (!barriers.contains(ghost3 + numberInRow)) {
-            setState(() {
-              ghost3 += numberInRow;
-              ghostLast3 = "down";
-            });
-          }
-        }
-        break;
-      case "down":
-        if (!barriers.contains(ghost3 + numberInRow)) {
-          setState(() {
-            ghost3 += numberInRow;
-            ghostLast3 = "down";
-          });
-        } else {
-          if (!barriers.contains(ghost3 - 1)) {
-            setState(() {
-              ghost3--;
-              ghostLast3 = "left";
-            });
-          } else if (!barriers.contains(ghost3 + 1)) {
-            setState(() {
-              ghost3++;
-              ghostLast3 = "right";
-            });
-          } else if (!barriers.contains(ghost3 - numberInRow)) {
-            setState(() {
-              ghost3 -= numberInRow;
-              ghostLast3 = "up";
-            });
-          }
-        }
-        break;
-    }
-  }
+
+  // void oldMoveGhost2() {
+  //   switch (ghostLast2) {
+  //     case "left":
+  //       if (!barriers.contains(ghost2 - 1)) {
+  //         setState(() {
+  //           ghost2--;
+  //         });
+  //       } else {
+  //         if (!barriers.contains(ghost2 + numberInRow)) {
+  //           setState(() {
+  //             ghost2 += numberInRow;
+  //             ghostLast2 = "down";
+  //           });
+  //         } else if (!barriers.contains(ghost2 + 1)) {
+  //           setState(() {
+  //             ghost2++;
+  //             ghostLast2 = "right";
+  //           });
+  //         } else if (!barriers.contains(ghost2 - numberInRow)) {
+  //           setState(() {
+  //             ghost2 -= numberInRow;
+  //             ghostLast2 = "up";
+  //           });
+  //         }
+  //       }
+  //       break;
+  //     case "right":
+  //       if (!barriers.contains(ghost2 + 1)) {
+  //         setState(() {
+  //           ghost2++;
+  //         });
+  //       } else {
+  //         if (!barriers.contains(ghost2 - numberInRow)) {
+  //           setState(() {
+  //             ghost2 -= numberInRow;
+  //             ghostLast2 = "up";
+  //           });
+  //         } else if (!barriers.contains(ghost2 + numberInRow)) {
+  //           setState(() {
+  //             ghost2 += numberInRow;
+  //             ghostLast2 = "down";
+  //           });
+  //         } else if (!barriers.contains(ghost2 - 1)) {
+  //           setState(() {
+  //             ghost2--;
+  //             ghostLast2 = "left";
+  //           });
+  //         }
+  //       }
+  //       break;
+  //     case "up":
+  //       if (!barriers.contains(ghost2 - numberInRow)) {
+  //         setState(() {
+  //           ghost2 -= numberInRow;
+  //           ghostLast2 = "up";
+  //         });
+  //       } else {
+  //         if (!barriers.contains(ghost2 + 1)) {
+  //           setState(() {
+  //             ghost2++;
+  //             ghostLast2 = "right";
+  //           });
+  //         } else if (!barriers.contains(ghost2 - 1)) {
+  //           setState(() {
+  //             ghost2--;
+  //             ghostLast2 = "left";
+  //           });
+  //         } else if (!barriers.contains(ghost2 + numberInRow)) {
+  //           setState(() {
+  //             ghost2 += numberInRow;
+  //             ghostLast2 = "down";
+  //           });
+  //         }
+  //       }
+  //       break;
+  //     case "down":
+  //       if (!barriers.contains(ghost2 + numberInRow)) {
+  //         setState(() {
+  //           ghost2 += numberInRow;
+  //           ghostLast2 = "down";
+  //         });
+  //       } else {
+  //         if (!barriers.contains(ghost2 - 1)) {
+  //           setState(() {
+  //             ghost2--;
+  //             ghostLast2 = "left";
+  //           });
+  //         } else if (!barriers.contains(ghost2 + 1)) {
+  //           setState(() {
+  //             ghost2++;
+  //             ghostLast2 = "right";
+  //           });
+  //         } else if (!barriers.contains(ghost2 - numberInRow)) {
+  //           setState(() {
+  //             ghost2 -= numberInRow;
+  //             ghostLast2 = "up";
+  //           });
+  //         }
+  //       }
+  //       break;
+  //   }
+  // }
+
+  // void oldMoveGhost3() {
+  //   switch (ghostLast) {
+  //     case "left":
+  //       if (!barriers.contains(ghost3 - 1)) {
+  //         setState(() {
+  //           ghost3--;
+  //         });
+  //       } else {
+  //         if (!barriers.contains(ghost3 + numberInRow)) {
+  //           setState(() {
+  //             ghost3 += numberInRow;
+  //             ghostLast3 = "down";
+  //           });
+  //         } else if (!barriers.contains(ghost3 + 1)) {
+  //           setState(() {
+  //             ghost3++;
+  //             ghostLast3 = "right";
+  //           });
+  //         } else if (!barriers.contains(ghost3 - numberInRow)) {
+  //           setState(() {
+  //             ghost3 -= numberInRow;
+  //             ghostLast3 = "up";
+  //           });
+  //         }
+  //       }
+  //       break;
+  //     case "right":
+  //       if (!barriers.contains(ghost3 + 1)) {
+  //         setState(() {
+  //           ghost3++;
+  //         });
+  //       } else {
+  //         if (!barriers.contains(ghost3 - numberInRow)) {
+  //           setState(() {
+  //             ghost3 -= numberInRow;
+  //             ghostLast3 = "up";
+  //           });
+  //         } else if (!barriers.contains(ghost3 - 1)) {
+  //           setState(() {
+  //             ghost3--;
+  //             ghostLast3 = "left";
+  //           });
+  //         } else if (!barriers.contains(ghost3 + numberInRow)) {
+  //           setState(() {
+  //             ghost3 += numberInRow;
+  //             ghostLast3 = "down";
+  //           });
+  //         }
+  //       }
+  //       break;
+  //     case "up":
+  //       if (!barriers.contains(ghost3 - numberInRow)) {
+  //         setState(() {
+  //           ghost3 -= numberInRow;
+  //           ghostLast3 = "up";
+  //         });
+  //       } else {
+  //         if (!barriers.contains(ghost3 + 1)) {
+  //           setState(() {
+  //             ghost3++;
+  //             ghostLast3 = "right";
+  //           });
+  //         } else if (!barriers.contains(ghost3 - 1)) {
+  //           setState(() {
+  //             ghost3--;
+  //             ghostLast3 = "left";
+  //           });
+  //         } else if (!barriers.contains(ghost3 + numberInRow)) {
+  //           setState(() {
+  //             ghost3 += numberInRow;
+  //             ghostLast3 = "down";
+  //           });
+  //         }
+  //       }
+  //       break;
+  //     case "down":
+  //       if (!barriers.contains(ghost3 + numberInRow)) {
+  //         setState(() {
+  //           ghost3 += numberInRow;
+  //           ghostLast3 = "down";
+  //         });
+  //       } else {
+  //         if (!barriers.contains(ghost3 - 1)) {
+  //           setState(() {
+  //             ghost3--;
+  //             ghostLast3 = "left";
+  //           });
+  //         } else if (!barriers.contains(ghost3 + 1)) {
+  //           setState(() {
+  //             ghost3++;
+  //             ghostLast3 = "right";
+  //           });
+  //         } else if (!barriers.contains(ghost3 - numberInRow)) {
+  //           setState(() {
+  //             ghost3 -= numberInRow;
+  //             ghostLast3 = "up";
+  //           });
+  //         }
+  //       }
+  //       break;
+  //   }
+  // }
 
   void moveGhost() {
     switch (ghostState) {
@@ -674,19 +825,13 @@ class _PHomePageState extends State<PHomePage> {
         return;
         break;
       case GhostState.active:
-        ghost1AI();
-        break;
-      case GhostState.chasing:
-        // TODO: Handle this case.
-        throw UnimplementedError();
+        ghost1AI(player);
         break;
       case GhostState.scatter:
-        // TODO: Handle this case.
-        throw UnimplementedError();
+        ghost1AI(ghost1HomeLocation);
         break;
       case GhostState.frightened:
-        // TODO: Handle this case.
-        throw UnimplementedError();
+        ghost1AI(Random().nextInt(numberOfSquares));
         break;
       case GhostState.home:
         // TODO: Handle this case.
@@ -745,10 +890,8 @@ class _PHomePageState extends State<PHomePage> {
 
 
       case GhostState.active:
+        ghost2AI(player);
         break;
-      case GhostState.chasing:
-        // TODO: Handle this case.
-        throw UnimplementedError();
       case GhostState.scatter:
         // TODO: Handle this case.
         throw UnimplementedError();
@@ -761,7 +904,6 @@ class _PHomePageState extends State<PHomePage> {
     }
 
 
-    oldMoveGhost2();
   }
 
   void moveGhost3() {
@@ -814,10 +956,8 @@ class _PHomePageState extends State<PHomePage> {
 
 
       case GhostState.active:
+        ghost3AI(player);
         break;
-      case GhostState.chasing:
-        // TODO: Handle this case.
-        throw UnimplementedError();
       case GhostState.scatter:
         // TODO: Handle this case.
         throw UnimplementedError();
@@ -828,8 +968,6 @@ class _PHomePageState extends State<PHomePage> {
         // TODO: Handle this case.
         throw UnimplementedError();
     }
-
-    oldMoveGhost3();
   }
 
 
